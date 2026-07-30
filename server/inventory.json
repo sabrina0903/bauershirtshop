@@ -9,9 +9,9 @@
             "Large",
             "X-Large"
         ],
-        "stock": 100,
+        "stock": 105,
         "stockBySize": {
-            "Small": 23,
+            "Small": 28,
             "Medium": 27,
             "Large": 27,
             "X-Large": 23
