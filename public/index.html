@@ -25,7 +25,7 @@
             
             <!-- Right Side (Your clean shopping cart action container) -->
             <div class="nav-right">
-                <a href="cart" class="cart-link" aria-label="View Shopping Cart">
+                <a href="/cart" class="cart-link" aria-label="View Shopping Cart">
                     <!-- Fixed SVG namespace link below lets the browser draw the vector icon graphic cleanly -->
                     <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 110 4 2 2 0 010-4z"></path>
@@ -91,7 +91,8 @@
                         actionButtonHTML = `<button class="buy-button" onclick="addToCart('${item.name}', ${item.price}, ${index})">Buy Now</button>`;
                     }
 
-                    const cardLink = item.name === 'JDM Style Street Racing Tee' ? "onclick=\"window.location.href='classic-logo-tee'\" style='cursor: pointer;'" : "";
+                    const cardLink = item.name === 'JDM Style Street Racing Tee' ? "onclick=\"window.location.href='/classic-logo-tee'\" style='cursor: pointer;'" : "";
+
                     const productImageHTML = item.name === 'JDM Style Street Racing Tee'
                         ? `<img src="images/image0%20(1).jpeg" alt="${item.name}" style="width: 92%; height: 92%; object-fit: contain; object-position: center; display: block; border-radius: 12px; margin: 4% auto;">`
                         : '👕';
