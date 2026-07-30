@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" role="img" aria-label="Classic Logo Tee illustration">
+  <rect width="800" height="900" fill="#f8fafc"/>
+  <rect x="180" y="140" width="440" height="620" rx="42" fill="#ffffff" stroke="#dbe4f0" stroke-width="6"/>
+  <rect x="250" y="220" width="300" height="360" rx="24" fill="#f1f5f9"/>
+  <rect x="270" y="250" width="260" height="120" rx="18" fill="#0f172a"/>
+  <circle cx="400" cy="300" r="48" fill="#ffffff" opacity="0.95"/>
+  <path d="M352 300c0-27 22-49 48-49s48 22 48 49" stroke="#0f172a" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M322 470c42 36 114 36 156 0" stroke="#0f172a" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M320 580c50 40 110 40 160 0" stroke="#64748b" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <text x="400" y="770" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#0f172a">Classic Logo Tee</text>
+</svg>

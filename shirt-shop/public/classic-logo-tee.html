@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Logo Tee | Apparel Studio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+    <style>
+        .product-hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 30px;
+            align-items: start;
+            margin: 30px 0;
+        }
+        .product-image-card,
+        .product-details-card,
+        .size-chart-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            padding: 24px;
+        }
+        .product-image-card img {
+            width: 100%;
+            border-radius: 14px;
+            background: #f8fafc;
+        }
+        .gallery-main-image {
+            width: 100%;
+            height: 420px;
+            object-fit: contain;
+            display: block;
+            border-radius: 14px;
+            background: #f8fafc;
+        }
+        .gallery-viewer {
+            position: relative;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 2;
+        }
+        .gallery-nav:hover {
+            background: #ffffff;
+        }
+        .gallery-nav.prev {
+            left: 10px;
+        }
+        .gallery-nav.next {
+            right: 10px;
+        }
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 0.78rem;
+            margin-bottom: 8px;
+        }
+        .detail-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 12px 0 20px;
+        }
+        .detail-description {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+        .detail-field {
+            margin-bottom: 14px;
+        }
+        .detail-field label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+        .detail-field select,
+        .detail-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .detail-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+        .btn-secondary {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-dark);
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+        .message {
+            margin-top: 14px;
+            color: #047857;
+            font-weight: 700;
+        }
+        .size-chart {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        .size-chart th,
+        .size-chart td {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 8px;
+            text-align: left;
+        }
+        .size-chart th {
+            background: #f8fafc;
+            color: var(--primary-color);
+        }
+        @media (max-width: 800px) {
+            .product-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="nav-left"></div>
+            <div class="nav-center">
+                <a href="index.html" class="brand-logo">
+                    <img src="images/IMG_0828.PNG" alt="AngMo Racing logo" class="brand-logo-image">
+                    <span>AngMo Racing</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a href="cart.html" class="cart-link" aria-label="View Shopping Cart">
+                    <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 110 4 2 2 0 010-4z"></path>
+                    </svg>
+                    <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <a href="index.html" class="back-shopping-link">
+                <svg class="back-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Collection
+            </a>
+        </div>
+
+        <div class="product-hero">
+            <div class="product-image-card">
+                <div class="gallery-viewer">
+                    <button class="gallery-nav prev" type="button" aria-label="Previous image">&#10094;</button>
+                    <img id="gallery-main-image" class="gallery-main-image" src="images/image0%20(1).jpeg" alt="JDM Style Street Racing Tee">
+                    <button class="gallery-nav next" type="button" aria-label="Next image">&#10095;</button>
+                </div>
+            </div>
+
+            <div class="product-details-card">
+                <p class="eyebrow">Gildan Essentials</p>
+                <h1>JDM Style Street Racing Tee</h1>
+                <p class="detail-description">A soft, comfortable everyday tee made for easy layering and everyday wear. This Gildan-style classic fits naturally and is great for casual outfits, events, and branded merch.</p>
+                <p class="detail-price">$20.00</p>
+
+                <div class="detail-field">
+                    <label for="size-select">Choose your size</label>
+                    <select id="size-select">
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+
+                <div class="detail-field">
+                    <label for="quantity-input">Quantity</label>
+                    <input id="quantity-input" type="number" min="1" max="10" value="1">
+                </div>
+
+                <div class="detail-actions">
+                    <button id="add-to-cart-btn" class="buy-button">Add to Cart</button>
+                    <a href="index.html" class="btn-secondary">Continue Shopping</a>
+                </div>
+
+                <p id="cart-message" class="message" aria-live="polite"></p>
+            </div>
+        </div>
+
+        <div class="size-chart-card">
+            <h3>Gildan Size Chart</h3>
+            <table class="size-chart">
+                <thead>
+                    <tr>
+                        <th>Size</th>
+                        <th>Chest</th>
+                        <th>Length</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Small</td>
+                        <td>18-20 in</td>
+                        <td>28 in</td>
+                    </tr>
+                    <tr>
+                        <td>Medium</td>
+                        <td>20-22 in</td>
+                        <td>29 in</td>
+                    </tr>
+                    <tr>
+                        <td>Large</td>
+                        <td>22-24 in</td>
+                        <td>30 in</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartBadge();
+
+            const sizeSelect = document.getElementById('size-select');
+            const quantityInput = document.getElementById('quantity-input');
+            const addButton = document.getElementById('add-to-cart-btn');
+            const message = document.getElementById('cart-message');
+            const mainImage = document.getElementById('gallery-main-image');
+            const prevButton = document.querySelector('.gallery-nav.prev');
+            const nextButton = document.querySelector('.gallery-nav.next');
+            const images = [
+                'images/image0%20(1).jpeg',
+                'images/image1.jpeg',
+                'images/image2.jpeg',
+                'images/image3.jpeg',
+                'images/image4.jpeg'
+            ];
+            let currentIndex = 0;
+
+            function updateImage(index) {
+                currentIndex = (index + images.length) % images.length;
+                mainImage.src = images[currentIndex];
+            }
+
+            prevButton.addEventListener('click', () => updateImage(currentIndex - 1));
+            nextButton.addEventListener('click', () => updateImage(currentIndex + 1));
+
+            addButton.addEventListener('click', () => {
+                const size = sizeSelect.value;
+                const quantity = parseInt(quantityInput.value, 10) || 1;
+                const cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+
+                const existingItem = cart.find(item => item.name === 'JDM Style Street Racing Tee' && item.size === size);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({
+                        name: 'JDM Style Street Racing Tee',
+                        price: 20,
+                        size: size,
+                        quantity: quantity
+                    });
+                }
+
+                localStorage.setItem('shopping_cart', JSON.stringify(cart));
+                updateCartBadge();
+                message.textContent = `Added ${quantity} JDM Style Street Racing Tee${quantity > 1 ? 's' : ''} (${size}) to your cart.`;
+            });
+        });
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-badge');
+
+            if (!badge) return;
+
+            if (totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.style.display = 'flex';
+                badge.style.alignItems = 'center';
+                badge.style.justifyContent = 'center';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

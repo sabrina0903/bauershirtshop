@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngMo Racing</title>
+    <!-- Clean separation: linking your external stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <!-- Left Side (Empty block to maintain perfect center balancing) -->
+            <div class="nav-left"></div>
+            
+            <!-- Center Side (Your main brand title) -->
+            <div class="nav-center">
+                <a href="index.html" class="brand-logo">
+                    <img src="images/IMG_0828.PNG" alt="AngMo Racing logo" class="brand-logo-image">
+                    <span>AngMo Racing</span>
+                </a>
+            </div>
+            
+            <!-- Right Side (Your clean shopping cart action container) -->
+            <div class="nav-right">
+                <a href="cart.html" class="cart-link" aria-label="View Shopping Cart">
+                    <!-- Fixed SVG namespace link below lets the browser draw the vector icon graphic cleanly -->
+                    <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 110 4 2 2 0 010-4z"></path>
+                    </svg>
+                    <!-- 🔵 Dynamic Notification Badge Count Counter Circle -->
+                    <span id="cart-badge" class="cart-badge" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>The Signature Collection</h2>
+            <p>Premium quality basics designed for everyday comfort.</p>
+            <p style="margin-top: 10px; color: #475569; font-style: italic; font-weight: 600; letter-spacing: 0.2px;">A local business proudly created by Bauer Bermann. We are committed to quality, style, and community.</p>
+        </div>
+        
+        <div id="product-grid" class="product-grid"></div>
+    </div>
+
+    <footer class="site-footer">
+        <p>Follow us for updates and behind-the-scenes content.</p>
+        <div class="footer-links">
+            <a href="https://www.instagram.com/angmoracing/" target="_blank" rel="noopener noreferrer">@angmoracing</a>
+            <a href="https://www.instagram.com/bauerbermann/" target="_blank" rel="noopener noreferrer">@bauerbermann</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Update badge quantity immediately on page load
+            updateCartBadge();
+
+            try {
+                const response = await fetch('/api/shirts');
+                const products = await response.json();
+                const grid = document.getElementById('product-grid');
+
+                products.forEach((item, index) => {
+                    let sizeOptions = "";
+                    item.sizes.forEach(size => {
+                        sizeOptions += `<option value="${size}">${size}</option>`;
+                    });
+
+                    const sizeStockMap = item.stockBySize || {};
+
+                    // 🛠️ INVENTORY CONTROL STATE LOGIC VARIABLES
+                    let actionButtonHTML = "";
+                    let cardOpacityStyle = "";
+                    let soldOutLabelHTML = "";
+                    let stockMessageHTML = "";
+
+                    const hasAnyStock = Object.values(sizeStockMap).some(stock => stock > 0);
+
+                    if (item.stock <= 0 || (Object.keys(sizeStockMap).length > 0 && !hasAnyStock)) {
+                        cardOpacityStyle = "style='opacity: 0.55; pointer-events: none;'";
+                        soldOutLabelHTML = "<span style='position: absolute; top: 15px; left: 15px; background-color: #dc3545; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; z-index: 10;'>Sold Out</span>";
+                        actionButtonHTML = `<button class="buy-button" style="background-color: #64748b; cursor: not-allowed;" disabled>Sold Out</button>`;
+                    } else if (item.name === 'JDM Style Street Racing Tee') {
+                        actionButtonHTML = `<button class="buy-button" onclick="buyClassicLogoTee(${index})">Buy Now</button>`;
+                    } else {
+                        actionButtonHTML = `<button class="buy-button" onclick="addToCart('${item.name}', ${item.price}, ${index})">Buy Now</button>`;
+                    }
+
+                    const cardLink = item.name === 'JDM Style Street Racing Tee' ? "onclick=\"window.location.href='classic-logo-tee.html'\" style='cursor: pointer;'" : "";
+                    const productImageHTML = item.name === 'JDM Style Street Racing Tee'
+                        ? `<img src="images/image0%20(1).jpeg" alt="${item.name}" style="width: 92%; height: 92%; object-fit: contain; object-position: center; display: block; border-radius: 12px; margin: 4% auto;">`
+                        : '👕';
+
+                    grid.innerHTML += `
+                        <div class="product-card" ${cardOpacityStyle} style="position: relative;">
+                            ${soldOutLabelHTML}
+                            <div class="product-image-placeholder" ${cardLink}>
+                                ${productImageHTML}
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-title">${item.name}</h3>
+                                <p class="product-price">$${item.price.toFixed(2)}</p>
+                                <p id="size-status-${index}" class="size-status-message" style="display: none; margin: 0 0 12px; color: #b45309; font-weight: 700; font-size: 0.9rem;"></p>
+                                
+                                <div class="variant-selector">
+                                    <label class="size-label">Select Size</label>
+                                    <select id="size-select-${index}" class="size-dropdown" data-stock-map='${JSON.stringify(sizeStockMap)}' onchange="updateSizeStatus(this, 'size-status-${index}', JSON.parse(this.dataset.stockMap || '{}'))">
+                                        ${sizeOptions}
+                                    </select>
+                                    ${actionButtonHTML}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const sizeSelect = document.getElementById(`size-select-${index}`);
+                    const sizeStatus = document.getElementById(`size-status-${index}`);
+                    const currentStockMap = JSON.parse(sizeSelect.dataset.stockMap || '{}');
+
+                    updateSizeStatus(sizeSelect, sizeStatus.id, currentStockMap);
+                });
+            } catch (err) {
+                console.error("Error connecting to server inventory:", err);
+            }
+        });
+
+        function updateSizeStatus(select, statusId, sizeStockMap) {
+            const sizeStatus = document.getElementById(statusId);
+            if (!select || !sizeStatus) return;
+
+            const selectedSize = select.value;
+            const selectedStock = sizeStockMap[selectedSize] || 0;
+
+            if (selectedStock > 0 && selectedStock <= 5) {
+                sizeStatus.textContent = 'Almost sold out!';
+                sizeStatus.style.display = 'block';
+            } else {
+                sizeStatus.textContent = '';
+                sizeStatus.style.display = 'none';
+            }
+        }
+
+        // 🛒 ENGINE LOGIC: Pushes select entries to localStorage databases
+        function addToCart(name, price, index) {
+            const sizeDropdown = document.getElementById(`size-select-${index}`);
+            const selectedSize = sizeDropdown.value;
+
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+
+            const targetItem = {
+                name: name,
+                price: price,
+                size: selectedSize,
+                quantity: 1
+            };
+
+            const existingItem = cart.find(item => item.name === name && item.size === selectedSize);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(targetItem);
+            }
+
+            localStorage.setItem('shopping_cart', JSON.stringify(cart));
+
+            updateCartBadge();
+            alert(`${name} (${selectedSize}) has been added to your cart!`);
+        }
+
+        function buyClassicLogoTee(index) {
+            const sizeDropdown = document.getElementById(`size-select-${index}`);
+            const selectedSize = sizeDropdown.value;
+            const price = 20;
+
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const existingItem = cart.find(item => item.name === 'JDM Style Street Racing Tee' && item.size === selectedSize);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: 'JDM Style Street Racing Tee',
+                    price: price,
+                    size: selectedSize,
+                    quantity: 1
+                });
+            }
+
+            localStorage.setItem('shopping_cart', JSON.stringify(cart));
+            updateCartBadge();
+            window.location.href = 'cart.html';
+        }
+
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const badge = document.getElementById('cart-badge');
+
+            if (totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.style.display = 'flex';
+                badge.style.alignItems = 'center';
+                badge.style.justifyContent = 'center';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

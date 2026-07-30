@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Apparel Studio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+    <style>
+        .checkout-shell {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .checkout-card,
+        .summary-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0, 70, 190, 0.05);
+        }
+
+        .checkout-card h3,
+        .summary-card h3 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-group label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field-group input,
+        .field-group select {
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .field-group input:focus,
+        .field-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 70, 190, 0.15);
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .payment-option {
+            flex: 1;
+            min-width: 160px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 12px;
+            cursor: pointer;
+            background: #f8fbff;
+        }
+
+        .payment-option.active {
+            border-color: var(--primary-color);
+            background: var(--accent-color);
+        }
+
+        .payment-option input {
+            margin-right: 8px;
+        }
+
+        .summary-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 8px;
+        }
+
+        .success-state {
+            display: none;
+            background: #ecfdf3;
+            color: #166534;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+        }
+
+        .payment-check-card {
+            display: none;
+            background: #f8fbff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+        }
+
+        .payment-check-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .order-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+
+        @media (max-width: 900px) {
+            .checkout-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="nav-left"></div>
+            <div class="nav-center">
+                <a href="index.html" class="brand-logo">
+                    <img src="images/IMG_0828.PNG" alt="AngMo Racing logo" class="brand-logo-image">
+                    <span>AngMo Racing</span>
+                </a>
+            </div>
+            <div class="nav-right"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="margin-bottom: 24px;">
+            <a href="cart.html" class="back-shopping-link">
+                <svg class="back-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Cart
+            </a>
+        </div>
+
+        <h2>Secure Checkout</h2>
+        <p class="order-note">Choose how you’d like to pay and finish your order.</p>
+
+        <div id="checkout-content"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutPage();
+        });
+
+        function renderCheckoutPage() {
+            const cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const content = document.getElementById('checkout-content');
+
+            if (!cart.length) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Your cart is empty</h3>
+                        <p>Add a few pieces first, then come back to checkout.</p>
+                        <a href="index.html" class="buy-button" style="text-decoration:none; display:inline-block; width:auto; padding:12px 24px; margin-top:12px;">Shop Collection</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const taxRate = 0.0825;
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+
+            const summaryItems = cart.map(item => `
+                <div class="summary-item">
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <span class="order-note">${item.size} × ${item.quantity}</span>
+                    </div>
+                    <div>$${(item.price * item.quantity).toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            content.innerHTML = `
+                <div class="checkout-shell">
+                    <div class="checkout-card">
+                        <h3>Payment Details</h3>
+
+                        <div class="payment-options" id="payment-methods">
+                            <label class="payment-option active">
+                                <input type="radio" name="paymentMethod" value="venmo" checked>
+                                Pay with Venmo
+                            </label>
+                        </div>
+
+                        <div class="order-note" id="venmo-note">
+                            Paying with Venmo will open your Venmo app or web payment page for @Bauer-Bermann.
+                        </div>
+                        <div class="order-note" style="margin-top: 8px;">
+                            If you don’t have Venmo or need additional help, please text 678-577-9121.
+                        </div>
+
+                        <form id="checkout-form" class="form-grid">
+                            <div class="field-group">
+                                <label for="fullName">Full Name</label>
+                                <input id="fullName" name="fullName" required>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="email">Email Address</label>
+                                <input id="email" name="email" type="email" required>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="streetAddress">Street Address</label>
+                                <input id="streetAddress" name="streetAddress" placeholder="123 Main St" required>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="state">State</label>
+                                <input id="state" name="state" placeholder="UT" required>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="zipCode">ZIP Code</label>
+                                <input id="zipCode" name="zipCode" placeholder="84101" required>
+                            </div>
+
+                            <div id="venmo-fields" class="form-grid">
+                                <div class="field-group">
+                                    <label for="venmoHandle">Venmo Handle</label>
+                                    <input id="venmoHandle" name="venmoHandle" placeholder="@yourname" required>
+                                </div>
+                            </div>
+
+                            <button class="buy-button" type="submit">Place Order</button>
+                        </form>
+
+                        <div id="payment-check-card" class="payment-check-card">
+                            <strong>Have you paid yet?</strong>
+                            <p class="order-note" style="margin-top: 6px;">If you already paid through Venmo, you can continue shopping. If not, please complete the payment first.</p>
+                            <div class="payment-check-actions">
+                                <button type="button" class="buy-button" onclick="confirmPaymentAndSubmit()" style="text-decoration:none; display:inline-block; width:auto; padding:12px 20px;">Continue Shopping</button>
+                                <button type="button" class="btn-secondary-clear" onclick="window.open('https://venmo.com/bauer-bermann', '_blank', 'noopener,noreferrer')">Pay Now</button>
+                            </div>
+                        </div>
+
+                        <div id="success-state" class="success-state"></div>
+                    </div>
+
+                    <div class="summary-card">
+                        <h3>Order Summary</h3>
+                        <div class="summary-list">${summaryItems}</div>
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <strong>$${subtotal.toFixed(2)}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tax (8.25%)</span>
+                            <strong>$${tax.toFixed(2)}</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Shipping</span>
+                            <strong>Included</strong>
+                        </div>
+                        <div class="summary-total">Total: $${total.toFixed(2)}</div>
+                        <p class="order-note" style="margin-top: 6px;">Estimated delivery within 5-7 business days.</p>
+                        
+
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('checkout-form').addEventListener('submit', handleCheckout);
+        }
+
+        let pendingOrder = null;
+
+        function handleCheckout(event) {
+            event.preventDefault();
+
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            cart = cart.map(item => item.name === 'JDM Style Street Racing Tee' ? { ...item, price: 20 } : item);
+            if (!cart.length) {
+                alert('Your cart is empty.');
+                return;
+            }
+
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const streetAddress = document.getElementById('streetAddress').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const zipCode = document.getElementById('zipCode').value.trim();
+            const venmoInput = document.getElementById('venmoHandle').value.trim();
+            const successState = document.getElementById('success-state');
+            const venmoHandle = 'bauer-bermann';
+
+            if (!fullName) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your full name.</strong>';
+                return;
+            }
+
+            if (!email) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your email address.</strong>';
+                return;
+            }
+
+            if (!streetAddress) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your street address.</strong>';
+                return;
+            }
+
+            if (!state) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your state.</strong>';
+                return;
+            }
+
+            if (!zipCode) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your ZIP code.</strong>';
+                return;
+            }
+
+            if (!venmoInput) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Please enter your Venmo handle.</strong>';
+                return;
+            }
+
+            if (paymentMethod === 'venmo') {
+
+                const paymentUrl = `https://venmo.com/${venmoHandle}`;
+                window.open(paymentUrl, '_blank', 'noopener,noreferrer');
+            }
+
+            const orderNumber = `ORD-${Date.now().toString().slice(-6)}`;
+            pendingOrder = { orderNumber, fullName, email, streetAddress, state, zipCode, paymentMethod };
+
+            successState.style.display = 'block';
+            successState.innerHTML = `
+                <strong>Almost done!</strong>
+                <div>Your order ${orderNumber} is ready to finalize.</div>
+                <div>Please confirm the Venmo payment, then continue.</div>
+            `;
+
+            document.getElementById('checkout-form').style.display = 'none';
+            document.getElementById('payment-check-card').style.display = 'block';
+        }
+
+        function confirmPaymentAndSubmit() {
+            const cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const successState = document.getElementById('success-state');
+
+            if (!cart.length || !pendingOrder) {
+                successState.style.display = 'block';
+                successState.innerHTML = '<strong>Your cart is empty.</strong>';
+                return;
+            }
+
+            fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cart })
+            })
+                .then(async response => {
+                    const data = await response.json();
+                    if (!response.ok || !data.success) {
+                        throw new Error(data.errors?.join(' ') || 'Unable to finalize the order.');
+                    }
+
+                    localStorage.removeItem('shopping_cart');
+                    localStorage.setItem('last_order', JSON.stringify(pendingOrder));
+
+                    successState.style.display = 'block';
+                    successState.innerHTML = `
+                        <strong>Order placed successfully!</strong>
+                        <div>Your order ${pendingOrder.orderNumber} is confirmed.</div>
+                        <div>We’ll send a receipt to ${pendingOrder.email} shortly.</div>
+                    `;
+
+                    document.getElementById('payment-check-card').style.display = 'none';
+                })
+                .catch(err => {
+                    successState.style.display = 'block';
+                    successState.innerHTML = `<strong>We couldn't finalize your order.</strong><div>${err.message}</div>`;
+                });
+        }
+
+        window.confirmPaymentAndSubmit = confirmPaymentAndSubmit;
+    </script>
+</body>
+
+<footer class="site-footer">
+        <p>Follow us for updates and behind-the-scenes content.</p>
+        <div class="footer-links">
+            <a href="https://www.instagram.com/angmoracing/" target="_blank" rel="noopener noreferrer">@angmoracing</a>
+            <a href="https://www.instagram.com/bauerbermann/" target="_blank" rel="noopener noreferrer">@bauerbermann</a>
+        </div>
+    </footer>
+</html>

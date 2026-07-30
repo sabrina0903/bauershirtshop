@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+    <style>
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        .cart-table th, .cart-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .cart-table th {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        .cart-summary-box {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            max-width: 400px;
+            margin-left: auto;
+            border: 1px solid rgba(0, 70, 190, 0.05);
+            text-align: right;
+        }
+        .total-price-line {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .btn-secondary-clear {
+            background: none;
+            border: 1px solid #cbd5e1;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            margin-right: 10px;
+        }
+        .btn-secondary-clear:hover {
+            background-color: #f1f5f9;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+        .checkout-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .checkout-link:hover {
+            color: #ffffff;
+        }
+
+        /* ➕➖ Interactive Quantity Button Framework styles */
+        .quantity-control-container {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 2px;
+            height: 42px;
+        }
+        .qty-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+        }
+        .qty-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        .qty-display-value {
+            padding: 0 12px;
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* 🗑️ Premium Trash Icon Container layout styles */
+        .row-trash-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            margin-left: 15px;
+            vertical-align: middle;
+            height: 42px;
+        }
+        .row-trash-btn:hover {
+            background-color: #fee2e2;
+            color: #ef4444;
+        }
+        .trash-svg-asset {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="nav-left"></div>
+            <div class="nav-center">
+                <a href="index.html" class="brand-logo">
+                    <img src="images/IMG_0828.PNG" alt="AngMo Racing logo" class="brand-logo-image">
+                    <span>AngMo Racing</span>
+                </a>
+            </div>
+            <div class="nav-right"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div style="margin-bottom: 25px;">
+            <a href="index.html" class="back-shopping-link">
+                <svg class="back-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Continue Shopping
+            </a>
+        </div>
+
+        <h2>Your Shopping Bag</h2>
+        
+        <div id="cart-workspace">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Item Details</th>
+                        <th>Size Choice</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-table-rows">
+                    <!-- Script will build inline components dynamically here -->
+                </tbody>
+            </table>
+
+            <div class="cart-summary-box">
+                <div class="total-price-line">Total: <span id="cart-grand-total">$0.00</span></div>
+                <button class="btn-secondary-clear" onclick="clearCart()">Clear Cart</button>
+                <a href="checkout.html" class="buy-button checkout-link" style="display: inline-block; width: auto; padding: 12px 35px; text-align: center;">Checkout Now</a>
+            </div>
+        </div>
+
+        <div id="empty-cart-message" style="display: none; text-align: center; margin-top: 60px;">
+            <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 25px;">Your bag is currently empty.</p>
+            <a href="index.html" class="buy-button" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">Go Browse Collection</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCartPage();
+        });
+
+        function renderCartPage() {
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            const workspace = document.getElementById('cart-workspace');
+            const emptyMessage = document.getElementById('empty-cart-message');
+            const tableRows = document.getElementById('cart-table-rows');
+            const grandTotalContainer = document.getElementById('cart-grand-total');
+
+            if (cart.length === 0) {
+                workspace.style.display = 'none';
+                emptyMessage.style.display = 'block';
+                return;
+            }
+
+            const needsPriceSync = cart.some(item => item.name === 'JDM Style Street Racing Tee' && item.price !== 20);
+            if (needsPriceSync) {
+                cart = cart.map(item => item.name === 'JDM Style Street Racing Tee' ? { ...item, price: 20 } : item);
+                localStorage.setItem('shopping_cart', JSON.stringify(cart));
+            }
+
+            workspace.style.display = 'block';
+            emptyMessage.style.display = 'none';
+            tableRows.innerHTML = ""; 
+
+            let totalAccumulator = 0;
+
+            cart.forEach((item, index) => {
+                const itemSubtotal = item.price * item.quantity;
+                totalAccumulator += itemSubtotal;
+
+                const availableSizes = ['Small', 'Medium', 'Large'];
+
+                const itemDisplay = item.name === 'JDM Style Street Racing Tee'
+                    ? `<div style="display: flex; align-items: center; gap: 12px;"><img src="images/image0%20(1).jpeg" alt="${item.name}" style="width: 56px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid #e2e8f0;"><span style="font-weight: 600; color: var(--text-dark);">${item.name}</span></div>`
+                    : `<span style="font-weight: 600; color: var(--text-dark);">👕 ${item.name}</span>`;
+
+                tableRows.innerHTML += `
+                    <tr>
+                        <td>${itemDisplay}</td>
+                        <td style="vertical-align: middle;">
+                            <select class="size-dropdown" data-index="${index}" onchange="changeItemSize(${index}, this.value)" style="margin-bottom: 0;">
+                                ${availableSizes.map(size => `<option value="${size}" ${size === item.size ? 'selected' : ''}>${size}</option>`).join('')}
+                            </select>
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <div class="quantity-control-container">
+                                <button class="qty-btn" onclick="adjustQuantity(${index}, -1)">-</button>
+                                <span class="qty-display-value">${item.quantity}</span>
+                                <button class="qty-btn" onclick="adjustQuantity(${index}, 1)">+</button>
+                            </div>
+                            
+                            <button class="row-trash-btn" onclick="removeItem(${index})" title="Remove Item">
+                                <svg class="trash-svg-asset" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </td>
+                        <td style="font-weight: 700; color: var(--text-dark); vertical-align: middle;">$${itemSubtotal.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            grandTotalContainer.innerText = `$${totalAccumulator.toFixed(2)}`;
+        }
+
+        function adjustQuantity(index, modifier) {
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += modifier;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('shopping_cart', JSON.stringify(cart));
+                renderCartPage();
+            }
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            if (cart[index]) {
+                cart.splice(index, 1);
+                localStorage.setItem('shopping_cart', JSON.stringify(cart));
+                renderCartPage();
+            }
+        }
+
+        function changeItemSize(index, newSize) {
+            let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+            if (cart[index]) {
+                cart[index].size = newSize;
+                localStorage.setItem('shopping_cart', JSON.stringify(cart));
+                renderCartPage();
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem('shopping_cart');
+            renderCartPage();
+        }
+
+        window.adjustQuantity = adjustQuantity;
+        window.removeItem = removeItem;
+        window.changeItemSize = changeItemSize;
+        window.clearCart = clearCart;
+    </script>
+</body>
+
+    <footer class="site-footer">
+        <p>Follow us for updates and behind-the-scenes content.</p>
+        <div class="footer-links">
+            <a href="https://www.instagram.com/angmoracing/" target="_blank" rel="noopener noreferrer">@angmoracing</a>
+            <a href="https://www.instagram.com/bauerbermann/" target="_blank" rel="noopener noreferrer">@bauerbermann</a>
+        </div>
+    </footer>
+</html>

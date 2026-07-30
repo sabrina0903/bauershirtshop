@@ -1,0 +1,355 @@
+/* Modern CSS Styling Framework Reset */
+:root {
+    --primary-color: #0046be; /* Premium, Trustworthy Royal Blue */
+    --primary-hover: #003399;
+    --accent-color: #e6f0ff;  /* Soft Sky Blue Tint */
+    --bg-light: #f4f7fc;      /* Modern Clean Slate White/Blue Background */
+    --text-dark: #1e293b;     /* Deep Navy Slate for high-contrast reading */
+    --text-muted: #64748b;    /* Elegant Muted Grey */
+    --card-shadow: 0 4px 20px rgba(0, 70, 190, 0.04);
+    --transition-smooth: all 0.25s ease-in-out;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Minimalist Header Navigation Framework */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 2px solid var(--accent-color);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+.navbar-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 3-Column Symmetry Grid Layout */
+.nav-left, .nav-right {
+    flex: 1; /* Gives identical, flexible sizing spaces to both edges */
+    display: flex;
+}
+.nav-left {
+    justify-content: flex-start;
+}
+.nav-right {
+    justify-content: flex-end; /* Locks the cart link container tightly to the right edge */
+}
+.nav-center {
+    flex: 2; /* Keeps your text logo container safely dead-centered */
+    display: flex;
+    justify-content: center;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.brand-logo-image {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 4px 12px rgba(0, 70, 190, 0.12);
+    background: #ffffff;
+}
+
+/* Sleek Matching Cart Icon Properties */
+.cart-icon {
+    width: 22px; /* Makes the cart smaller and elegant */
+    height: 22px;
+    color: var(--primary-color); /* Sets it to match your royal blue color perfectly */
+    transition: var(--transition-smooth);
+}
+.cart-link:hover .cart-icon {
+    transform: scale(1.1);
+    color: var(--primary-hover);
+}
+
+/* Main Workspace Layout */
+.container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+.section-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Premium CSS Grid Layout */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 35px;
+    justify-content: center;
+}
+
+/* Animated Product Cards */
+.product-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 70, 190, 0.05);
+}
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 70, 190, 0.1);
+}
+
+/* Clean Box Icon Placeholder */
+.product-image-placeholder {
+    background-color: var(--accent-color);
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4.5rem;
+    transition: var(--transition-smooth);
+    color: var(--primary-color);
+}
+.product-card:hover .product-image-placeholder {
+    background-color: #d1e4ff;
+}
+
+.product-info {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.product-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: var(--text-dark);
+}
+.product-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 20px 0;
+}
+
+/* Sizing Form Elements */
+.variant-selector {
+    margin-top: auto;
+}
+.size-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+.size-dropdown {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    margin-bottom: 20px;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+.size-dropdown:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 70, 190, 0.15);
+}
+
+/* Premium Purchase Button */
+.buy-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    letter-spacing: 0.5px;
+}
+.buy-button:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(0, 70, 190, 0.25);
+}
+
+/* Shopping Cart Counting Badge Notification Dot */
+.cart-link {
+    position: relative; /* Essential context hook anchoring children badges inside boundaries */
+}
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.site-footer {
+    margin-top: 60px;
+    padding: 24px 20px 40px;
+    text-align: center;
+    background: #ffffff;
+    border-top: 2px solid var(--accent-color);
+}
+.site-footer p {
+    margin: 0 0 10px;
+    color: var(--text-muted);
+}
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.footer-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+.footer-links a:hover {
+    color: var(--primary-hover);
+}
+
+.back-shopping-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+.back-shopping-link:hover {
+    color: var(--primary-hover);
+    transform: translateX(-4px);
+}
+.back-arrow-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+/* ==========================================================================
+   PRODUCT IMAGE GALLERY
+   ========================================================================== */
+
+.gallery-viewer {
+    position: relative;
+    width: 100%;
+    height: 650px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.2s ease;
+}
+
+.gallery-nav:hover {
+    transform: translateY(-50%) scale(1.05);
+}
+
+.gallery-nav.prev {
+    left: 16px;
+}
+
+.gallery-nav.next {
+    right: 16px;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.logo-image {
+    height: 60px;
+    width: auto;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.logo-image:hover {
+    transform: scale(1.03);
+}
