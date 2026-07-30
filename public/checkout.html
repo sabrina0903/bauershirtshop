@@ -239,7 +239,7 @@
                         </div>
 
                         <div class="order-note" id="venmo-note">
-                            Paying with Venmo will open your Venmo app or web payment page for @Bauer-Bermann.
+                            Paying with Venmo will open your Venmo app or web payment page for @BauerBermann.
                         </div>
                         <div class="order-note" style="margin-top: 8px;">
                             If you don’t have Venmo or need additional help, please text 678-577-9121.
@@ -285,8 +285,8 @@
                             <strong>Have you paid yet?</strong>
                             <p class="order-note" style="margin-top: 6px;">If you already paid through Venmo, you can continue shopping. If not, please complete the payment first.</p>
                             <div class="payment-check-actions">
-                                <button type="button" class="buy-button" onclick="confirmPaymentAndSubmit()" style="text-decoration:none; display:inline-block; width:auto; padding:12px 20px;">Continue Shopping</button>
-                                <button type="button" class="btn-secondary-clear" onclick="window.open('https://venmo.com/bauer-bermann', '_blank', 'noopener,noreferrer')">Pay Now</button>
+                                <button type="button" class="buy-button" onclick="confirmPaymentAndSubmit()" style="text-decoration:none; display:inline-block; width:auto; padding:12px 20px;">Yes, Continue Shopping</button>
+                                <button type="button" class="btn-secondary-clear" onclick="window.open('https://venmo.com/bauerbermann', '_blank', 'noopener,noreferrer')">Pay Now</button>
                             </div>
                         </div>
 
@@ -339,7 +339,7 @@
             const zipCode = document.getElementById('zipCode').value.trim();
             const venmoInput = document.getElementById('venmoHandle').value.trim();
             const successState = document.getElementById('success-state');
-            const venmoHandle = 'bauer-bermann';
+            const venmoHandle = 'bauerbermann';
 
             if (!fullName) {
                 successState.style.display = 'block';
@@ -408,10 +408,17 @@
             }
 
             fetch('/api/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cart })
-            })
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cart,
+                        email: pendingOrder.email,
+                        fullName: pendingOrder.fullName,
+                        streetAddress: pendingOrder.streetAddress,
+                        state: pendingOrder.state,
+                        zipCode: pendingOrder.zipCode
+                    })
+                })
                 .then(async response => {
                     const data = await response.json();
                     if (!response.ok || !data.success) {

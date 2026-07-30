@@ -31,8 +31,12 @@ app.get('/api/shirts', (req, res) => {
 
 // Endpoint 2: Process checkout, update database limits, and notify Slack
 app.post('/api/checkout', async (req, res) => {
-    const cartItems = req.body.cart; // Expects array of bought items from cart page
-    const customerEmail = req.body.email || 'No email provided'; // Capture customer email from request
+    const cartItems = req.body.cart;
+    const customerEmail = req.body.email || 'No email provided';
+    const customerName = req.body.fullName || 'No name provided';
+    const customerAddress = req.body.streetAddress
+        ? `${req.body.streetAddress}, ${req.body.state} ${req.body.zipCode}`
+        : 'No address provided';
     let inventory = readInventory();
     let issues = [];
     let orderTotal = 0;
@@ -87,7 +91,9 @@ app.post('/api/checkout', async (req, res) => {
     } else {
         const slackMessage = {
             text: `🛍️ *New ShirtShop Order Received!*\n` +
+                  `• *Customer Name:* ${customerName}\n` +
                   `• *Customer Email:* ${customerEmail}\n` +
+                  `• *Customer Address:* ${customerAddress}\n` +
                   `• *Items Ordered:*\n${itemsSummaryList.join('\n')}\n` +
                   `• *Total Value:* $${orderTotal.toFixed(2)}`
         };
