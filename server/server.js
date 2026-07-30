@@ -128,6 +128,11 @@ app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/checkout.html'));
 });
 
+app.get('/classic-logo-tee', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/classic-logo-tee.html'));
+});
+
+
 // Start the server (Consolidated to run cleanly once)
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
