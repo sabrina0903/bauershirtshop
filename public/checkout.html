@@ -21,6 +21,7 @@
             padding: 24px;
             box-shadow: var(--card-shadow);
             border: 1px solid rgba(0, 70, 190, 0.05);
+            max-width: 420px;
         }
 
         .checkout-card h3,
@@ -101,10 +102,24 @@
         .summary-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             gap: 12px;
             padding-bottom: 10px;
             border-bottom: 1px solid #e2e8f0;
+            min-height: 56px;
+        }
+
+        .summary-item > div:first-child {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .summary-item > div:last-child {
+            white-space: nowrap;
+            align-self: flex-start;
+            margin-left: auto;
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
         .summary-total {
@@ -140,6 +155,10 @@
             margin-top: 12px;
         }
 
+        .checkout-submit-row {
+            margin-top: 18px;
+        }
+
         .order-note {
             color: var(--text-muted);
             font-size: 0.95rem;
@@ -157,6 +176,55 @@
         @media (max-width: 900px) {
             .checkout-shell {
                 grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                order: 1;
+                max-width: 100%;
+            }
+
+            .checkout-card {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 12px;
+            }
+
+            .checkout-card,
+            .summary-card {
+                padding: 16px;
+                border-radius: 12px;
+            }
+
+            .payment-option {
+                min-width: 100%;
+            }
+
+            .summary-item {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                align-items: start;
+            }
+
+            .summary-item > div:last-child {
+                justify-self: end;
+                margin-left: 0;
+            }
+
+            .payment-check-actions {
+                flex-direction: column;
+            }
+
+            .payment-check-actions button,
+            .payment-check-actions a {
+                width: 100%;
+            }
+
+            .checkout-submit-row {
+                margin-top: 14px;
             }
         }
     </style>
@@ -278,7 +346,9 @@
                                 </div>
                             </div>
 
-                            <button class="buy-button" type="submit">Place Order</button>
+                            <div class="checkout-submit-row">
+                                <button class="buy-button" type="submit" style="width: 100%;">Place Order</button>
+                            </div>
                         </form>
 
                         <div id="payment-check-card" class="payment-check-card">

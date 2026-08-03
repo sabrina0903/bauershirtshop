@@ -10,6 +10,63 @@
     --transition-smooth: all 0.25s ease-in-out;
 }
 
+@media (max-width: 680px) {
+    .navbar-container {
+        gap: 8px;
+    }
+
+    .nav-left,
+    .nav-right {
+        flex: 0 0 auto;
+    }
+
+    .nav-center {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .brand-logo {
+        gap: 8px;
+        font-size: 0.95rem;
+        letter-spacing: 0.8px;
+    }
+
+    .brand-logo span {
+        white-space: nowrap;
+    }
+
+    .brand-logo-image {
+        width: 44px;
+        height: 44px;
+    }
+
+    .container {
+        margin: 32px auto;
+        padding: 0 14px;
+    }
+
+    .section-header {
+        margin-bottom: 30px;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .product-image-placeholder {
+        height: 230px;
+    }
+
+    .gallery-viewer {
+        height: 420px;
+    }
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-light);
@@ -352,4 +409,19 @@ body {
 
 .logo-image:hover {
     transform: scale(1.03);
+}
+
+@media (max-width: 480px) {
+    .brand-logo span {
+        display: none;
+    }
+
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .cart-badge {
+        top: -4px;
+        right: -6px;
+    }
 }
