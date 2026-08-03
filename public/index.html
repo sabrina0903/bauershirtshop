@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ang Mo Racing</title>
     <!-- Clean separation: linking your external stylesheet -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/png" href="./images/IMG_0828.PNG">
 </head>
 <body>
 
@@ -17,15 +17,15 @@
             
             <!-- Center Side (Your main brand title) -->
             <div class="nav-center">
-                <a href="/" class="brand-logo">
-                    <img src="images/IMG_0828.PNG" alt="Ang Mo Racing logo" class="brand-logo-image">
+                <a href="./" class="brand-logo">
+                    <img src="./images/IMG_0828.PNG" alt="Ang Mo Racing logo" class="brand-logo-image">
                     <span>Ang Mo Racing</span>
                 </a>
             </div>
             
             <!-- Right Side (Your clean shopping cart action container) -->
             <div class="nav-right">
-                <a href="/cart" class="cart-link" aria-label="View Shopping Cart">
+                <a href="./cart" class="cart-link" aria-label="View Shopping Cart">
                     <!-- Fixed SVG namespace link below lets the browser draw the vector icon graphic cleanly -->
                     <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 110 4 2 2 0 010-4z"></path>
@@ -61,7 +61,7 @@
             updateCartBadge();
 
             try {
-                const response = await fetch('/api/shirts');
+                const response = await fetch('./inventory.json');
                 const products = await response.json();
                 const grid = document.getElementById('product-grid');
 
@@ -91,10 +91,10 @@
                         actionButtonHTML = `<button class="buy-button" onclick="addToCart('${item.name}', ${item.price}, ${index})">Buy Now</button>`;
                     }
 
-                    const cardLink = item.name === 'JDM Style Street Racing Tee' ? "onclick=\"window.location.href='/classic-logo-tee'\" style='cursor: pointer;'" : "";
+                    const cardLink = item.name === 'JDM Style Street Racing Tee' ? "onclick=\"window.location.href='./classic-logo-tee'\" style='cursor: pointer;'" : "";
 
                     const productImageHTML = item.name === 'JDM Style Street Racing Tee'
-                        ? `<img src="images/image0%20(1).jpeg" alt="${item.name}" style="width: 92%; height: 92%; object-fit: contain; object-position: center; display: block; border-radius: 12px; margin: 4% auto;">`
+                        ? `<img src="./images/image0%20(1).jpeg" alt="${item.name}" style="width: 92%; height: 92%; object-fit: contain; object-position: center; display: block; border-radius: 12px; margin: 4% auto;">`
                         : '👕';
 
                     grid.innerHTML += `
@@ -194,7 +194,7 @@
 
             localStorage.setItem('shopping_cart', JSON.stringify(cart));
             updateCartBadge();
-            window.location.href = '/cart';
+            window.location.href = './cart';
         }
 
         function updateCartBadge() {

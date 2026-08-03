@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/png" href="images/IMG_0828.PNG">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/png" href="./images/IMG_0828.PNG">
     <style>
         .cart-table {
             width: 100%;
@@ -227,8 +227,8 @@
         <div class="navbar-container">
             <div class="nav-left"></div>
             <div class="nav-center">
-                <a href="/" class="brand-logo">
-                    <img src="images/IMG_0828.PNG" alt="Ang Mo Racing logo" class="brand-logo-image">
+                <a href="./" class="brand-logo">
+                    <img src="./images/IMG_0828.PNG" alt="Ang Mo Racing logo" class="brand-logo-image">
                     <span>Ang Mo Racing</span>
                 </a>
             </div>
@@ -238,7 +238,7 @@
 
     <div class="container">
         <div style="margin-bottom: 25px;">
-            <a href="/" class="back-shopping-link">
+            <a href="./" class="back-shopping-link">
                 <svg class="back-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://w3.org">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -266,14 +266,14 @@
                 <div class="total-price-line">Total: <span id="cart-grand-total">$0.00</span></div>
                 <div class="cart-summary-actions">
                     <button class="btn-secondary-clear" onclick="clearCart()">Clear Cart</button>
-                    <a href="/checkout" class="buy-button checkout-link" style="padding: 12px 35px;">Checkout Now</a>
+                    <a href="./checkout" class="buy-button checkout-link" style="padding: 12px 35px;">Checkout Now</a>
                 </div>
             </div>
         </div>
 
         <div id="empty-cart-message" style="display: none; text-align: center; margin-top: 60px;">
             <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 25px;">Your bag is currently empty.</p>
-            <a href="/" class="buy-button" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">Go Browse Collection</a>
+            <a href="./" class="buy-button" style="text-decoration: none; display: inline-block; width: auto; padding: 12px 30px;">Go Browse Collection</a>
         </div>
     </div>
 
@@ -314,7 +314,7 @@
                 const availableSizes = ['Small', 'Medium', 'Large'];
 
                 const itemDisplay = item.name === 'JDM Style Street Racing Tee'
-                    ? `<div style="display: flex; align-items: center; gap: 12px;"><img src="images/image0%20(1).jpeg" alt="${item.name}" style="width: 56px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid #e2e8f0;"><span style="font-weight: 600; color: var(--text-dark);">${item.name}</span></div>`
+                    ? `<div style="display: flex; align-items: center; gap: 12px;"><img src="./images/image0%20(1).jpeg" alt="${item.name}" style="width: 56px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid #e2e8f0;"><span style="font-weight: 600; color: var(--text-dark);">${item.name}</span></div>`
                     : `<span style="font-weight: 600; color: var(--text-dark);">👕 ${item.name}</span>`;
 
                 tableRows.innerHTML += `

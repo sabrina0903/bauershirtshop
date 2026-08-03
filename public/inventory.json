@@ -1,0 +1,53 @@
+[
+    {
+        "id": 1,
+        "name": "JDM Style Street Racing Tee",
+        "price": 20,
+        "sizes": [
+            "Small",
+            "Medium",
+            "Large",
+            "X-Large"
+        ],
+        "stock": 105,
+        "stockBySize": {
+            "Small": 28,
+            "Medium": 27,
+            "Large": 27,
+            "X-Large": 23
+        },
+        "image": "images/image0 (1).jpeg"
+    },
+    {
+        "id": 2,
+        "name": "Coming Soon",
+        "price": 25,
+        "sizes": [
+            "Small",
+            "Medium",
+            "Large"
+        ],
+        "stock": 100,
+        "stockBySize": {
+            "Small": 10,
+            "Medium": 5,
+            "Large": 85
+        }
+    },
+    {
+        "id": 3,
+        "name": "Coming Soon",
+        "price": 25,
+        "sizes": [
+            "Small",
+            "Medium",
+            "Large"
+        ],
+        "stock": 100,
+        "stockBySize": {
+            "Small": 10,
+            "Medium": 10,
+            "Large": 80
+        }
+    }
+]

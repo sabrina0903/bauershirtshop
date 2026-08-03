@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/cart",
+      "destination": "/cart.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/classic-logo-tee",
+      "destination": "/classic-logo-tee.html"
+    }
+  ]
+}
